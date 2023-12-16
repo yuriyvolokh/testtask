@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Move to{% endblock %}
+{% block content %}
+  <h1>Move to</h1>
+  <p class="important">
+    <form id="move_to" name="move_to" action="/move_to" method="post">
+	From: 
+	<select name="src" id="src">
+        {% for item in src_files %}
+	<option value="{{item}}">{{item}}</option>
+	{% endfor %}
+        </select>
+	
+	To: 
+	<select name="dst" id="dst">
+	  {% for item in dst_folders %}
+	  <option value="{{item}}">{{item}}</option>
+	  {% endfor %}
+        </select>
+	<br />
+
+	<input type="submit" />
+    </form>
+
+{% endblock %}

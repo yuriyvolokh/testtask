@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Edit file{% endblock %}
+{% block content %}
+  <h1>Edit file</h1>
+  <p class="important">
+  <a data-confirm="Are you sure?" data-method="get" href="/delete_file?param={{title}}" rel="nofollow">Delete</a>
+    <a data-confirm="Are you sure?" data-method="post" href="/move_to?param={{title}}" rel="nofollow">Move to</a>
+
+    <form id="new_file" name="newfile" action="/new_file" method="post">
+	<input type="text" name="title" id="title" value="{{title}}"/>
+	<br>
+	<textarea name="content" id="content" type="text" rows="9" >{{content}}</textarea>
+	<br />
+	<input type="submit" />
+    </form>
+
+{% endblock %}

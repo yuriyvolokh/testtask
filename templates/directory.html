@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Directory content{% endblock %}
+{% block content %}
+  <h1>Direcctory content</h1>
+  <p class="important">
+    {% for item in directory_folders %}
+    <p><a href="/index?param={{item}}"> {{item}} </a></p>
+    {% endfor %}
+    {% for item in directory_files %}
+    <p><a href="/edit_file?param={{item}}"> {{item}} </a></p>
+    {% endfor %}
+
+{% endblock %}
