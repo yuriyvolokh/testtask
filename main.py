@@ -136,8 +136,12 @@ async def move_to_render(request: Request, user=Depends(manager), param: str = "
     filename = os.path.join("static", user.get("name"), param)
     dirname = os.path.dirname(filename)
     files = os.listdir(dirname)
-    src_files = [name for name in files if not os.path.isdir(os.path.join(dirname, name))]
-    dst_folders = [name for name in files if os.path.isdir(os.path.join(dirname, name))]
+    src_files = [os.path.join(os.path.dirname(param), name)
+                 for name in files
+                 if not os.path.isdir(os.path.join(dirname, name))]
+    dst_folders = [name
+                   for name in files
+                   if os.path.isdir(os.path.join(dirname, name))]
 
     context = {'request': request,
                "src_files": src_files,
@@ -149,6 +153,10 @@ async def move_to_render(request: Request, user=Depends(manager), param: str = "
 async def move_to(request: Request, user=Depends(manager), src: str = Form(...), dst: str = Form(...)):
     src_file = os.path.join("static", user.get("name"), src)
     dst_file = os.path.join("static", user.get("name"), dst, src)
+    if dst == "..":
+        dst_file = os.path.join(
+                os.path.dirname(os.path.dirname(src_file)),
+                os.path.basename(src_file))
     os.rename(src_file, dst_file)
     response = RedirectResponse(url="/index", status_code=status.HTTP_302_FOUND)
     return response
